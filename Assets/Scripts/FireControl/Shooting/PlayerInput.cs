@@ -14,7 +14,7 @@ public class PlayerInput : Singleton<PlayerInput>
     [SerializeField] int shotStorage;
 
     PotionPanic inputActions;
-    public CannonPool _pool;
+    CannonPool _pool;
 
     bool shotHeld;
 

@@ -1192,8 +1192,8 @@ MonoBehaviour:
   prefab: {fileID: 3687775679059193469, guid: 916cc0e73038f4d4ea31a19f1bfb1f0c, type: 3}
   shootFrom: {fileID: 114385950}
   maxDistance: 10
-  timeBetweenShots: 0.1
-  reloadTime: 0.1
+  timeBetweenShots: 0.2
+  reloadTime: 0.6
   shotStorage: 5
   _pool: {fileID: 0}
   shotsRemaining: 0
