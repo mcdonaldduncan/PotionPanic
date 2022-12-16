@@ -14,7 +14,7 @@ public class PlayerInput : Singleton<PlayerInput>
     [SerializeField] int shotStorage;
 
     PotionPanic inputActions;
-    CannonPool _pool;
+    public CannonPool _pool;
 
     bool shotHeld;
 
@@ -45,7 +45,7 @@ public class PlayerInput : Singleton<PlayerInput>
     void Start()
     {
         _pool = gameObject.AddComponent<CannonPool>();
-        _pool.ballPrefab = prefab;
+        _pool.SetPrefab(prefab);
     }
 
     private void Update()
@@ -59,7 +59,6 @@ public class PlayerInput : Singleton<PlayerInput>
         shotsRemaining++;
         lastAddTime = Time.time;
     }
-
 
     private void OnFire(InputAction.CallbackContext context)
     {

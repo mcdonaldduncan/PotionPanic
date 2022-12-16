@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class ProjectileFire : MonoBehaviour
+public class ProjectileFire : MonoBehaviour, IPoolable<ProjectileFire>
 {
-    [SerializeField]
-    GameObject particle;
-    Rigidbody _rb;
-
-    [SerializeField]
-    float initialAngle;
-    int damagePerShot = 1;
-
+    [SerializeField] float radius = 1.1f;
+    [SerializeField] float initialAngle;
+    [SerializeField] int damagePerShot = 1;
     [SerializeField] LayerMask enemy;
+
+    Rigidbody _rb;
 
     Vector3 initialPos;
 
@@ -31,7 +28,7 @@ public class ProjectileFire : MonoBehaviour
         _rb.velocity = Vector3.zero;
     }
 
-    void ReturnToPool()
+    public void ReturnToPool()
     {
         if (gameObject.activeSelf == true)
         {
@@ -75,15 +72,18 @@ public class ProjectileFire : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        var temp = Instantiate(particle, transform.position, Quaternion.identity);
-        Destroy(temp, 1f);
+
+        var temp = GameManager.Instance.ParticlePool.TakeFromPool();
+        temp.transform.position = transform.position;
+            //Instantiate(particle, transform.position, Quaternion.identity);
+        //Destroy(temp, 1f);
         DamageEnemies();
         ReturnToPool();
     }
 
     private void DamageEnemies()
     {
-        var hits = Physics.OverlapSphere(transform.position, 1.1f, enemy);
+        var hits = Physics.OverlapSphere(transform.position, radius, enemy);
 
         foreach (var hit in hits)
         {
@@ -92,5 +92,10 @@ public class ProjectileFire : MonoBehaviour
                 enemy.TakeDamage(damagePerShot);
             }
         }
+    }
+
+    public void Dispose()
+    {
+        ReturnToPool();
     }
 }

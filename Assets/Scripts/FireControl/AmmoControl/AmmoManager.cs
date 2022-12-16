@@ -7,7 +7,6 @@ public class AmmoManager : MonoBehaviour
     [SerializeField] AmmoIndicator[] indicators;
     [SerializeField] Material[] materials;
 
-
     void Update()
     {
         for (int i = 0; i < indicators.Length; i++)

@@ -6,15 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    [SerializeField] GameObject particlePrefab;
+
     public delegate void GameEvent();
     public static event GameEvent GameStart;
     public static event GameEvent GameOver;
 
-    public bool gameOver;
+    [System.NonSerialized] public bool gameOver;
+
+    [System.NonSerialized] public ParticlePool ParticlePool;
 
     private void Start()
     {
         StartGame();
+
+        ParticlePool = gameObject.AddComponent<ParticlePool>();
+        ParticlePool.poolPrefab = particlePrefab;
     }
 
     public void EndGame()

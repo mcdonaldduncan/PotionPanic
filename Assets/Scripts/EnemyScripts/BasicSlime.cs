@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class BasicSlime : MonoBehaviour, IEnemy
+public class BasicSlime : MonoBehaviour, IEnemy, IPoolable<BasicSlime>
 {
     [SerializeField] int startingHealth;
     [SerializeField] float speed;
@@ -16,13 +17,17 @@ public class BasicSlime : MonoBehaviour, IEnemy
 
     Vector3 healthScale;
 
+    bool isInitialized;
+
+    public IObjectPool<BasicSlime> Pool { get; set; }
+
     public int Health { get; set; }
 
     public void CheckForDeath()
     {
         if (Health <= 0)
         {
-            Destroy(this.gameObject);
+            ReturnToPool();
         }
     }
 
@@ -46,6 +51,14 @@ public class BasicSlime : MonoBehaviour, IEnemy
         }
     }
 
+    public void ReturnToPool()
+    {
+        if (gameObject.activeSelf == true)
+        {
+            Pool.Release(this);
+        }
+    }
+
     public void TakeDamage(int damageTaken)
     {
         Health -= damageTaken;
@@ -56,15 +69,20 @@ public class BasicSlime : MonoBehaviour, IEnemy
     private void OnEnable()
     {
         Health = startingHealth;
+        if (!isInitialized)
+        {
+            Init();
+        }
+        ScaleHealth();
     }
 
-    void Start()
+    void Init()
     {
+        isInitialized = true;
         healthBar = transform.GetChild(0).gameObject;
         healthRend = healthBar.GetComponent<MeshRenderer>();
         healthScale = healthBar.transform.localScale;
         target = GameObject.FindGameObjectWithTag("Target").transform;
-        ScaleHealth();
     }
 
     void Update()
@@ -74,10 +92,17 @@ public class BasicSlime : MonoBehaviour, IEnemy
 
         if (transform.position == target.position)
         {
+            ReturnToPool();
+
             if (GameManager.Instance.gameOver) return;
 
             GameManager.Instance.EndGame();
         }
 
+    }
+
+    public void Dispose()
+    {
+        ReturnToPool();
     }
 }

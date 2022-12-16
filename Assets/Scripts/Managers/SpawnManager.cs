@@ -11,6 +11,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int firstWaveNumber;
     [SerializeField] int maxDifficulty;
 
+    SlimeObjectPool[] slimeObjectPools;
+
     float lastSpawnTime;
     int difficultyMeasure;
     int speedUps;
@@ -21,11 +23,20 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
+        slimeObjectPools = new SlimeObjectPool[enemyPrefabs.Length];
+
+        for (int i = 0; i < slimeObjectPools.Length; i++)
+        {
+            slimeObjectPools[i] = gameObject.AddComponent<SlimeObjectPool>();
+            slimeObjectPools[i].SetPrefab(enemyPrefabs[i]);
+        }
+
         for (int i = 0; i < firstWaveNumber; i++)
         {
-            GameObject temp = Instantiate(enemyPrefabs[0]);
+            BasicSlime temp = slimeObjectPools[0].TakeFromPool();
             temp.transform.position = spawnPoints[(i + 1) % spawnPoints.Length].transform.position;
         }
+
     }
 
     void Update()
@@ -68,6 +79,7 @@ public class SpawnManager : MonoBehaviour
                 CreateWave(2, 4);
                 break;
             default:
+                CreateWave(2, 4);
                 break;
         }
     }
@@ -76,7 +88,7 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < firstWaveNumber + difficultyMeasure; i++)
         {
-            GameObject temp = Instantiate(enemyPrefabs[UnityEngine.Random.Range(minEnemy, maxEnemy)]);
+            BasicSlime temp = slimeObjectPools[UnityEngine.Random.Range(minEnemy, maxEnemy)].TakeFromPool();
             temp.transform.position = spawnPoints[(i + 1) % spawnPoints.Length].transform.position;
         }
     }
