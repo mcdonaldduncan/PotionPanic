@@ -1,3 +1,3 @@
 # PotionPanic
  
-## [Play Now!](https://github.com/mcdonaldduncan/PotionPanic/blob/main/Builds/index.html)
+## [Play Now!](https://mcdonaldduncan.github.io/PotionPanic/Builds/index.html)
