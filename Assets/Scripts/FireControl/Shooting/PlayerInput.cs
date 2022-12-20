@@ -78,6 +78,7 @@ public class PlayerInput : Singleton<PlayerInput>
             ProjectileFire temp = _pool.TakeFromPool();
             temp.transform.position = shootFrom.position;
             temp.Launch(targetPos);
+
             lastShotTime = Time.time;
 
             if (shotsRemaining == shotStorage)

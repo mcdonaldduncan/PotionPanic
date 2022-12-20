@@ -1195,7 +1195,6 @@ MonoBehaviour:
   timeBetweenShots: 0.2
   reloadTime: 0.6
   shotStorage: 5
-  _pool: {fileID: 0}
   shotsRemaining: 0
 --- !u!4 &532285097 stripped
 Transform:
@@ -1439,8 +1438,8 @@ MonoBehaviour:
   - {fileID: 254690583}
   - {fileID: 1370467181}
   spawnTimer: 10
-  firstWaveNumber: 5
-  maxDifficulty: 10
+  firstWaveNumber: 4
+  maxDifficulty: 20
 --- !u!1 &684514978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1042235896
 MonoBehaviour:
   m_ObjectHideFlags: 0

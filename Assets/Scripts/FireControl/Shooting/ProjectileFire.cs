@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -75,8 +73,6 @@ public class ProjectileFire : MonoBehaviour, IPoolable<ProjectileFire>
 
         var temp = GameManager.Instance.ParticlePool.TakeFromPool();
         temp.transform.position = transform.position;
-            //Instantiate(particle, transform.position, Quaternion.identity);
-        //Destroy(temp, 1f);
         DamageEnemies();
         ReturnToPool();
     }
