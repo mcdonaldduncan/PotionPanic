@@ -70,7 +70,6 @@ public class ProjectileFire : MonoBehaviour, IPoolable<ProjectileFire>
 
     private void OnCollisionEnter(Collision collision)
     {
-
         var temp = GameManager.Instance.ParticlePool.TakeFromPool();
         temp.transform.position = transform.position;
         DamageEnemies();
